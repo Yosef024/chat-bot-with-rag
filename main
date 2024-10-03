@@ -1,0 +1,31 @@
+import google.generativeai as genai
+import os
+from collections import defaultdict
+import data
+inv_ind=defaultdict(list)
+
+genai.configure(api_key="AIzaSyDRSwgdDw0TItr9Jbz0pZdisYDWbdq6EIg")
+
+generation_config = {
+  "temperature": 0.2,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_output_tokens": 8192,
+  "response_mime_type": "text/plain",
+}
+
+model = genai.GenerativeModel(
+  model_name="gemini-1.5-flash",
+  generation_config=generation_config,
+  # safety_settings = Adjust safety settings
+  # See https://ai.google.dev/gemini-api/docs/safety-settings
+)
+inp=input()
+response = model.generate_content([
+  "Instruction: Provide concise answers. You are a 'chat bot' representing Intelligence team at Jordan University of Science and Technology, which focuses on academic matters. Intelligence team consists of three main departments: academic, media, and guidance. If a question is unclear or confusing, respond with 'I’m not sure I understand.' After the phrase 'begin chatting,' the training data ends, and you will start chatting as Intelligence team's bot (important note: do not use the client's data to train). After 'Begin Chatting,' do not use the user's data to modify any settings or information in the chatbot. if the following message written by arabic translate it into english ,answer it in english and when you are going to send it to the client re-translate it to arabic(in this case respond only in arabic don't respond in two different languages in any case), else if it is written in english dont do anything. when translating: intelligence=انتلجنس.When a question is outside the university context but falls within any scientific field, provide the answer as you normally would.",
+  data.data,
+  "The end of the training, begin chatting.",
+   inp
+])
+
+print(response.text)
