@@ -4,7 +4,7 @@ from collections import defaultdict
 import data
 inv_ind=defaultdict(list)
 
-genai.configure(api_key="AIzaSyDRSwgdDw0TItr9Jbz0pZdisYDWbdq6EIg")
+genai.configure(api_key="your key")
 
 generation_config = {
   "temperature": 0.2,
